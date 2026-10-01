@@ -41,7 +41,28 @@ if (typeof document !== "undefined") {
   const textarea = document.getElementById("install-snippet");
   const submitButton = document.getElementById("load-script");
   const status = document.getElementById("status");
+  const resendButton = document.getElementById("resend-page-view");
+  const resendStatus = document.getElementById("resend-status");
   let started = false;
+
+  resendButton.addEventListener("click", async () => {
+    if (resendButton.disabled) return;
+    resendButton.disabled = true;
+    resendStatus.hidden = false;
+    resendStatus.textContent = "Enviando PageView…";
+    resendStatus.dataset.state = "pending";
+    let accepted = false;
+    try {
+      accepted = (await window.rastracking_info.forward("rastracking_page_view")) === true;
+    } catch {
+      accepted = false;
+    }
+    resendStatus.textContent = accepted
+      ? "Envio aceito. Confirme o evento salvo no RastrackDash Info."
+      : "Envio não aceito. Confira a conexão e tente novamente.";
+    resendStatus.dataset.state = accepted ? "loaded" : "error";
+    resendButton.disabled = false;
+  });
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -77,6 +98,7 @@ if (typeof document !== "undefined") {
     runtimeScript.addEventListener("load", () => {
       status.textContent = "Script carregado. Confirme a coleta no RastrackDash Info.";
       status.dataset.state = "loaded";
+      resendButton.hidden = !window.rastracking_info || typeof window.rastracking_info.forward !== "function";
     });
     runtimeScript.addEventListener("error", () => {
       status.textContent = "O script não carregou. Confira a conexão e recarregue a página para tentar novamente.";
