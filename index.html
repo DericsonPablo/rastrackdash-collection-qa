@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://info.rastrack.app/rastracking-info.js; style-src 'self'; connect-src https://info.rastrack.app; img-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>QA da coleta · RastrackDash Info</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="qa.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="intro">
+      <span class="eyebrow">RastrackDash Info · QA</span>
+      <h1>Teste da coleta</h1>
+      <p>Use esta página para carregar o script oficial a partir de uma origem HTTPS separada. Cole o código completo de instalação gerado para a fonte de teste.</p>
+    </header>
+
+    <section class="panel" aria-labelledby="install-title">
+      <h2 id="install-title">Código de instalação</h2>
+      <p>O código fica apenas nesta aba. Ele não é salvo nem exibido depois do envio.</p>
+      <form id="install-form" autocomplete="off">
+        <label for="install-snippet">Cole os dois scripts oficiais</label>
+        <textarea id="install-snippet" name="snippet" rows="9" required spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="snippet-help"></textarea>
+        <p id="snippet-help" class="help">A página aceita somente a configuração JSON e o script de produção do Info.</p>
+        <button id="load-script" type="submit">Carregar script de coleta</button>
+      </form>
+      <p id="status" class="status" role="status" aria-live="polite">Aguardando o código de instalação.</p>
+    </section>
+
+    <footer>Carregar o script não comprova que eventos chegaram. Confirme a coleta no RastrackDash Info.</footer>
+  </main>
+</body>
+</html>
